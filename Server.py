@@ -1,4 +1,5 @@
 import socket
+import sys
 from tkinter import *
 from PIL import Image, ImageTk
 import threading
@@ -7,6 +8,7 @@ import threading
 class ImageServerApp:
     def __init__(self):
         self.root = Tk()
+
         self.root.title("Image Viewer")
         self.current_image_index = 0
         self.image_paths = [f"Images\\{i}.jpg" for i in range(1, 12)]
@@ -15,7 +17,14 @@ class ImageServerApp:
         self.label = Label(self.root, image=self.photo)
         self.label.pack()
         self.server_thread = threading.Thread(target=self.run_server)
+        self.server_thread.daemon = True
         self.server_thread.start()
+
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def on_closing(self):
+        self.root.quit()
+        sys.exit()
 
     def change_image(self):
         self.current_image_index += 1
@@ -39,7 +48,6 @@ class ImageServerApp:
         while True:
             client_socket, client_address = server_socket.accept()
             self.change_image()
-
     def start(self):
         self.root.mainloop()
 
@@ -47,6 +55,3 @@ class ImageServerApp:
 if __name__ == "__main__":
     app = ImageServerApp()
     app.start()
-
-
-
