@@ -30,7 +30,6 @@ class ImageServerApp:
         self.current_image_index += 1
         if self.current_image_index >= len(self.image_paths):
             self.current_image_index = 0
-
         new_image = Image.open(self.image_paths[self.current_image_index])
         new_photo = ImageTk.PhotoImage(new_image)
 

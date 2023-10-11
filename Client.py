@@ -25,7 +25,6 @@ def click_button():
 window = Tk()
 window.title("Button")
 window.geometry("800x600")
-
 button_font = font.Font(family='Helvetica', size=30)
 
 button = Button(text='PRESS', command=click_button, height=10, width=20, bg='gray', fg='White', font=button_font)
